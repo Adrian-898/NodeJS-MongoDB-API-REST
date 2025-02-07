@@ -36,14 +36,30 @@ router.get('/:id', getBook, async (req, res) => {
 	res.json(res.book)
 })
 
-// modificar un libro [put ID:?]
+// Obtener todos los libros [GET ALL]
+router.get('/', async (req, res) => {
+	try {
+		const books = await Book.find()
+		console.log('GET ALL: ', books)
+
+		if (books.length === 0) {
+			return res.status(204).json([])
+		}
+		res.json(books)
+	} catch (error) {
+		res.status(500).json({ message: error.message })
+		console.error('Hubo un error al listar los libros')
+	}
+})
+
+// modificar un libro por completo (todos los campos) [put ID:?]
 router.put('/:id', getBook, async (req, res) => {
 	try {
 		const book = res.book
-		book.title = req.body.title || book.title
-		book.author = req.body.author || book.author
-		book.genre = req.body.genre || book.genre
-		book.release_date = req.body.release_date || book.release_date
+		book.title = req.body.title || null
+		book.author = req.body.author || null
+		book.genre = req.body.genre || null
+		book.release_date = req.body.release_date || null
 
 		const updatedBook = await book.save()
 		res.json(updatedBook)
@@ -54,7 +70,7 @@ router.put('/:id', getBook, async (req, res) => {
 	}
 })
 
-// modificar un libro [patch ID:?]
+// modificar un libro parcialmente (al menos un campo) [patch ID:?]
 router.patch('/:id', getBook, async (req, res) => {
 	if (!req.body.title && !req.body.author && !req.body.genre && !req.body.release_date) {
 		return res.status(400).json({
@@ -75,22 +91,6 @@ router.patch('/:id', getBook, async (req, res) => {
 		res.status(500).json({
 			message: error.message,
 		})
-	}
-})
-
-// Obtener todos los libros [GET ALL]
-router.get('/', async (req, res) => {
-	try {
-		const books = await Book.find()
-		console.log('GET ALL: ', books)
-
-		if (books.length === 0) {
-			return res.status(204).json([])
-		}
-		res.json(books)
-	} catch (error) {
-		res.status(500).json({ message: error.message })
-		console.error('Hubo un error al listar los libros')
 	}
 })
 
