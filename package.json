@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-mongodb-api-rest",
+  "version": "0.0.1",
+  "description": "CRUD con nodeJS y MongoDB",
+  "license": "MIT",
+  "author": "Adrian Torres",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "node --watch src/app.js",
+    "start": "node src/app.js",
+    "lint": "npx standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.0"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
+}
